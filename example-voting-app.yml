@@ -1,6 +1,7 @@
 ### This is just a sample file to run the example voting app under swarm as a stack
 ### This uses the same problem statement as for - the file voting-app-swarm-mode (https://github.com/BretFisher/udemy-docker-mastery/tree/master/swarm-app-1)
 ### This is not a full fledged example for the voting app using stack deploy
+### to run use "  docker stack deploy -c example-voting-app.yml  voteapp  "
 version: "3.3"
 services:
   vote:
@@ -44,3 +45,6 @@ volumes:
 
 networks:
   backend:
+    driver: overlay
+  frontend:
+    driver: overlay
