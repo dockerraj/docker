@@ -1,0 +1,13 @@
+## This is a solution to the docker swarm excercise in Bret Fisher's course
+## Link to assignment - https://github.com/BretFisher/udemy-docker-mastery/tree/master/swarm-app-1
+
+docker network create backend --driver overlay
+docker network create frontend --driver overlay
+docker volume create db-data
+
+docker service create --name vote --replicas 2 dockersamples/examplevotingapp_vote:before --network frontend -p 80:80
+docker service create --name redis --replicas 2 redis:3.2 --network frontend
+docker service create --name worker --replicas 2 dockersamples/examplevotingapp_worker --network backend --network frontend
+
+docker service create --name db --replicas 1 postgres:9.4 --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data
+docker service create --name result --replicas 1 dockersamples/examplevotingapp_result:before --network backend -p 5001:80
