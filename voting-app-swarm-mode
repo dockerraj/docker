@@ -6,7 +6,7 @@ docker network create frontend --driver overlay
 docker volume create db-data
 
 docker service create --name vote --replicas 2 --network frontend -p 80:80 dockersamples/examplevotingapp_vote:before 
-docker service create --name redis --replicas 2 --network frontend redis:3.2 
+docker service create --name redis --replicas 1 --network frontend redis:3.2 
 docker service create --name worker --replicas 2 --network backend --network frontend dockersamples/examplevotingapp_worker 
 
 docker service create --name db --replicas 1  --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
