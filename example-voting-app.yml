@@ -1,0 +1,46 @@
+### This is just a sample file to run the example voting app under swarm as a stack
+### This uses the same problem statement as for - the file voting-app-swarm-mode (https://github.com/BretFisher/udemy-docker-mastery/tree/master/swarm-app-1)
+### This is not a full fledged example for the voting app using stack deploy
+version: "3.3"
+services:
+  vote:
+    image: dockersamples/examplevotingapp_vote:before
+    networks:
+      - frontend
+    deploy:
+      replicas: 2
+    ports:
+      - "80:80"
+  redis:
+    image: redis:3.2
+    networks:
+      - frontend
+    deploy:
+      replicas: 1
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      replicas: 1
+
+  db:
+    image: postgres:9.4
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+    networks:
+      - backend
+
+  result:
+    image: dockersamples/examplevotingapp_result:before
+    networks:
+      - backend
+    ports:
+      - "5001:80"
+
+volumes:
+  dbdata:
+
+networks:
+  backend:
