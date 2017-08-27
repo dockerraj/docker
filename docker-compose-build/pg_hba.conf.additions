@@ -1,0 +1,2 @@
+host all all samenet md5
+host  all  all  drupal.drupal_backend   md5
