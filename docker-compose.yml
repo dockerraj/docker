@@ -1,0 +1,35 @@
+version: "2.1"
+services:
+
+   drupal:
+     image: drupal
+     networks:
+       backend:
+         aliases:
+           - drupal
+       frontend:
+         aliases:
+           - drupal
+     ports:
+       - "8080:80"
+     depends_on:
+       - postgres
+
+
+   postgres:
+     image: postgres
+     volumes:
+       - pgdata_vol:/var/lib/postgresql/data
+     container_name: postgres
+     env_file:
+       - pg.env
+     networks:
+       backend:
+         aliases:
+           - postgres_db
+volumes:
+   pgdata_vol:
+
+networks:
+   backend:
+   frontend:
