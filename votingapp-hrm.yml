@@ -1,0 +1,59 @@
+version: "3.3"
+services:
+  vote:
+    image: dtr.ashnikdemo.com:12443/ashnik/examplevotingapp_vote:latest
+    networks:
+      - frontend
+      - ucp-hrm
+
+    deploy:
+      replicas: 2
+      labels:
+        - com.docker.ucp.mesh.http.80=external_route=http://voting.demoapps.ashnikdemo.com/,internal_port=80
+
+    ports:
+      - "80"
+  redis:
+    image: dtr.ashnikdemo.com:12443/ashnik/redis:3.2
+    networks:
+      - frontend
+    deploy:
+      replicas: 1
+  worker:
+    image: dtr.ashnikdemo.com:12443/ashnik/examplevotingapp_worker:latest
+    networks:
+      - frontend
+      - backend
+    deploy:
+      replicas: 1
+
+  db:
+    image: dtr.ashnikdemo.com:12443/ashnik/postgres:9.4
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+    networks:
+      - backend
+
+  result:
+    image: dtr.ashnikdemo.com:12443/ashnik/examplevotingapp_result:latest
+    networks:
+      - backend
+      - ucp-hrm
+    ports:
+      - "80"
+    deploy:
+      labels:
+        - com.docker.ucp.mesh.http.80=external_route=http://results.demoapps.ashnikdemo.com/,internal_port=80
+
+volumes:
+  dbdata:
+
+networks:
+  backend:
+    driver: overlay
+  frontend:
+    driver: overlay
+  ucp-hrm:
+    external:
+      name: ucp-hrm
+
