@@ -6,6 +6,7 @@ docker container run --rm -d --name tweet-to-us -p 80 -p 443 -v /docker/twitter-
 Optionally you can also build using this Dockerfile
 
 docker image build -t tweet-to-us:docker-service . 
+
 docker container run -p 80 -p 443 -d tweet-to-us:docker-service
 
 
