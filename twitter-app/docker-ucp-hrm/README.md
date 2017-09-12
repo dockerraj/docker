@@ -7,6 +7,7 @@ docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
 e.g.
 
 (*)Login if needed
+
 docker login dtr.ashnikdemo.com:12443/ashnik --username ashnik --password password
 
 docker image build --build-arg 'constraint:ostype==linux' -t dtr.ashnikdemo.com:12443/ashnik/tweet-to-us:docker-ucp-hrm-b1 .
