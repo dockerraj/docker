@@ -31,9 +31,13 @@ Value = external_route=http://tweet-app.demoapps.ashnikdemo.com/,internal_port=8
 ## Make a change and roll to production - Rolling Update
 
 Make changes and rebuild
+
 rm -f index.html
+
 cp  index-with-mistake.html index.html
+
 docker image build --build-arg 'constraint:ostype==linux' -t dtr.ashnikdemo.com:12443/ashnik/tweet-to-us:docker-ucp-hrm-b2 .
+
 docker push dtr.ashnikdemo.com:12443/ashnik/tweet-to-us:docker-ucp-hrm-b2
 
 
