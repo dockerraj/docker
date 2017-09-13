@@ -1,6 +1,6 @@
 ## Running with docker run command
 
-docker container run --rm -d --name tweet-to-us -p 80 -p 443 -v /docker/twitter-app/docker-service:/usr/share/nginx/html nginx
+docker container run --rm -d --name tweet-to-us -p 80 -p 443 -v $(pwd):/usr/share/nginx/html nginx
 
 ## Build and Run as service
 Optionally you can also build using this Dockerfile
