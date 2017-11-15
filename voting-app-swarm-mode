@@ -10,4 +10,4 @@ docker service create --name redis --replicas 1 --network frontend redis:3.2
 docker service create --name worker --replicas 2 --network backend --network frontend dockersamples/examplevotingapp_worker 
 
 docker service create --name db --replicas 1  --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
-docker service create --name result --replicas 1 --network backend -p 5001:80 dockersamples/examplevotingapp_result:before
+docker service create --name result --replicas 1 --network backend -p 5002:80 dockersamples/examplevotingapp_result:before
